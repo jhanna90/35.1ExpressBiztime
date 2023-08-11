@@ -3,15 +3,20 @@
 
 const express = require("express");
 
+const ExpressError = require("./expressError");
+const cRoutes = require('./routes/companies');
+const iRoutes = require('./routes/invoices');
+
 const app = express();
-const ExpressError = require("./expressError")
 
 app.use(express.json());
+app.use('/companies', cRoutes);
+app.use('/invoices', iRoutes);
 
 
 /** 404 handler */
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   const err = new ExpressError("Not Found", 404);
   return next(err);
 });
